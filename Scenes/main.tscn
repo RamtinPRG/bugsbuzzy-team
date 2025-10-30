@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dgdn1rhmks8wd"]
 
 [ext_resource type="Shader" uid="uid://g8t1cte8wjtp" path="res://stylized-sky.gdshader" id="1_8gbba"]
-[ext_resource type="PackedScene" uid="uid://b6mo5u1u5be88" path="res://floor.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://dxqr7fq0h0h7g" path="res://floor.tscn" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://clkt1rv6d77ts" path="res://Sun.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://d13mqqp2ndgyy" path="res://player.tscn" id="3_kry3j"]
 
@@ -27,7 +27,7 @@ shader_parameter/clouds_samples = 32
 shader_parameter/shadow_sample = 4
 shader_parameter/clouds_density = 0.40000000596048
 shader_parameter/clouds_scale = 1.0
-shader_parameter/clouds_smoothness = 0.049999998882400004
+shader_parameter/clouds_smoothness = 0.0499999988824
 shader_parameter/clouds_light_color = Color(0.22745098, 0.44705883, 1, 1)
 shader_parameter/clouds_shadow_intensity = 8.0000001192096
 shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_8gbba")
@@ -54,7 +54,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bo1nx"]
-size = Vector3(9.154053, 0.7052002, 10.765533)
+size = Vector3(11.556519, 0.7052002, 13.95845)
 
 [node name="Main" type="Node3D"]
 
@@ -81,5 +81,5 @@ transform = Transform3D(-0.64545774, 0, -0.763796, 0, 1, 0, 0.763796, 0, -0.6454
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34021, -0.1473999, 0.27134705)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13897705, -0.1473999, -1.3251114)
 shape = SubResource("BoxShape3D_bo1nx")
