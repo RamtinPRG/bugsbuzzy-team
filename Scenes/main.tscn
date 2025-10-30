@@ -1,82 +1,85 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgdn1rhmks8wd"]
+[gd_scene load_steps=13 format=3 uid="uid://dgdn1rhmks8wd"]
 
-[ext_resource type="Script" uid="uid://c4j5vkhpoms4q" path="res://player.gd" id="1_h2yge"]
-[ext_resource type="AudioStream" uid="uid://cjbc2nmsg5n2i" path="res://Assets/sounds/toggle.wav" id="2_ueoa1"]
-[ext_resource type="PackedScene" uid="uid://crrqgk6o6v7gl" path="res://wall_unit.tscn" id="3_8gbba"]
-[ext_resource type="PackedScene" uid="uid://c84u5tmmcooak" path="res://Assets/hexagon-kit/GLB format/river-intersectionG.glb" id="3_jjvhh"]
+[ext_resource type="Shader" uid="uid://g8t1cte8wjtp" path="res://stylized-sky.gdshader" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://b6mo5u1u5be88" path="res://floor.tscn" id="2_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://clkt1rv6d77ts" path="res://Sun.png" id="2_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://d13mqqp2ndgyy" path="res://player.tscn" id="3_kry3j"]
 
-[sub_resource type="Environment" id="Environment_0xm2m"]
-background_mode = 3
-tonemap_mode = 3
-tonemap_exposure = 1.2
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.0431373, 0.0431373, 0.0392157, 1)
-fog_density = 1.0
-fog_depth_end = 150.0
-volumetric_fog_density = 0.1
+[sub_resource type="Curve" id="Curve_8gbba"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.13551402, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7279608), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7dm0k"]
-radius = 0.08105469
-height = 0.34014893
+[sub_resource type="CurveTexture" id="CurveTexture_jjvhh"]
+curve = SubResource("Curve_8gbba")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8gbba"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8gbba"]
+noise = SubResource("FastNoiseLite_8gbba")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjvhh"]
+shader = ExtResource("1_8gbba")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_8gbba")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_8gbba")
+shader_parameter/cloud_curves = SubResource("CurveTexture_jjvhh")
+shader_parameter/clouds_samples = 32
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.40000000596048
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_smoothness = 0.049999998882400004
+shader_parameter/clouds_light_color = Color(0.22745098, 0.44705883, 1, 1)
+shader_parameter/clouds_shadow_intensity = 8.0000001192096
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_8gbba")
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
+shader_parameter/bottom_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
+shader_parameter/sun_scatter = Color(0.1254902, 0.08627451, 0.37254903, 1)
+shader_parameter/astro_tint = Color(1, 1, 1, 1)
+shader_parameter/astro_sampler = ExtResource("2_jjvhh")
+shader_parameter/astro_scale = 6.0000000894072
+shader_parameter/astro_intensity = 1.20000000298024
+shader_parameter/stars_intensity = 5.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_kry3j"]
+sky_material = SubResource("ShaderMaterial_jjvhh")
+
+[sub_resource type="Environment" id="Environment_21xkr"]
+background_mode = 2
+sky = SubResource("Sky_kry3j")
+ambient_light_sky_contribution = 0.1
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bo1nx"]
-size = Vector3(20.79126, 1, 19.71344)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8gbba"]
+size = Vector3(9.154053, 0.7052002, 10.765533)
 
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_0xm2m")
+environment = SubResource("Environment_21xkr")
 
-[node name="player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44872, 0.011898)
-script = ExtResource("1_h2yge")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.82992554, 0)
-shape = SubResource("CapsuleShape3D_7dm0k")
-
-[node name="Head" type="SpringArm3D" parent="player"]
-
-[node name="Camera3D" type="Camera3D" parent="player/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9429338, -0.52941084, 1.50506)
-fov = 11.4
-far = 400.0
-
-[node name="Flashlight" type="SpotLight3D" parent="player/Head"]
-transform = Transform3D(1, 0, 0, 0, 0.9906316, 0.13656303, 0, -0.13656303, 0.9906316, 0.0093865525, 0.7490022, 1.30161)
-visible = false
-light_energy = 4.945
-light_size = 0.082
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0, 0, 0, 1)
+light_energy = 0.0
+light_indirect_energy = 0.0
+light_specular = 0.0
 shadow_enabled = true
-distance_fade_enabled = true
-spot_range = 20.858
-spot_angle = 56.13
-spot_angle_attenuation = 0.06037119
-
-[node name="FlashlightAudio" type="AudioStreamPlayer3D" parent="player/Head"]
-transform = Transform3D(1, 0, 0, 0, 0.421922, 0.906632, 0, -0.906632, 0.421922, 0.0262375, 0.772655, 1.30161)
-visible = false
-stream = ExtResource("2_ueoa1")
-autoplay = true
+sky_mode = 2
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302759, 1.90735e-06, 0.141972)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Player" parent="." instance=ExtResource("3_kry3j")]
+transform = Transform3D(-0.64545774, 0, -0.763796, 0, 1, 0, 0.763796, 0, -0.64545774, 0.69460666, 0.4096393, -0.39493406)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2281494, 0, -4.7833557)
+[node name="Floor" parent="." instance=ExtResource("2_bo1nx")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34021, -0.1473999, 0.27134705)
 shape = SubResource("BoxShape3D_bo1nx")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(15.888189, 0, 0, 0, 1, 0, 0, 0, 9.838183, 0, 0, 0)
-mesh = SubResource("BoxMesh_8gbba")
-
-[node name="WallUnit" parent="." instance=ExtResource("3_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3596687, 0.5, 1.3786898)
-
-[node name="river-intersectionG2" parent="." instance=ExtResource("3_jjvhh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8748417, 0.351403, 1.3761599)
