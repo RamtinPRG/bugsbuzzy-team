@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://dxqr7fq0h0h7g"]
+
+[ext_resource type="PackedScene" uid="uid://fyhvwhuhsxav" path="res://Assets/hexagon-kit/GLB format/grass-forest.glb" id="4_2jbdd"]
+[ext_resource type="PackedScene" uid="uid://dcrx0wtl0iwga" path="res://Assets/hexagon-kit/GLB format/grass-hill.glb" id="5_7j7qi"]
+[ext_resource type="PackedScene" uid="uid://bsqxggue2t43a" path="res://Assets/hexagon-kit/GLB format/grass.glb" id="6_04ji4"]
+[ext_resource type="PackedScene" uid="uid://dg7f53lty17rw" path="res://Assets/hexagon-kit/GLB format/path-crossing.glb" id="7_24wwu"]
+[ext_resource type="PackedScene" uid="uid://ctacuj2cne0qu" path="res://Assets/hexagon-kit/GLB format/path-corner-sharp.glb" id="8_04ji4"]
+[ext_resource type="PackedScene" uid="uid://di48x6pcc81ow" path="res://Assets/hexagon-kit/GLB format/stone-rocks.glb" id="9_2jbdd"]
+[ext_resource type="PackedScene" uid="uid://cn0387kwti2ig" path="res://Assets/hexagon-kit/GLB format/stone.glb" id="9_7j7qi"]
+[ext_resource type="PackedScene" uid="uid://buv0khu5jcedk" path="res://Assets/hexagon-kit/GLB format/unit-tree.glb" id="9_24wwu"]
+[ext_resource type="PackedScene" uid="uid://dos5qfk0tra3i" path="res://Assets/hexagon-kit/GLB format/path-straight.glb" id="10_3rovh"]
+[ext_resource type="PackedScene" uid="uid://bx00o33whbt" path="res://Assets/hexagon-kit/GLB format/building-house.glb" id="11_8hon5"]
+
+[node name="Floor" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="grass2" parent="." instance=ExtResource("6_04ji4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.019445091, 0, -0.0056675673)
+
+[node name="path-crossing2" parent="grass2" instance=ExtResource("7_24wwu")]
+transform = Transform3D(0.9192383, 0, 0, 0, 2.3001344, 0, 0, 0, 0.96836424, -0.03120248, 0.14409837, -0.008682042)
+
+[node name="grass3" parent="." instance=ExtResource("6_04ji4")]
+transform = Transform3D(1.0261335, 0, -0.0052380613, 0, 1, 0, 0.0050684037, 0, 1.0604819, 0.5018258, 0.0032234192, -0.8523829)
+
+[node name="path-corner-sharp2" parent="grass3" instance=ExtResource("8_04ji4")]
+transform = Transform3D(-0.4818564, -0.00940874, 0.8267341, 3.9915454e-10, 1.0003396, 0.01056065, -0.805187, 0.005630569, -0.49475107, -0.043661475, 0.18915999, 0.012617409)
+
+[node name="unit-tree2" parent="grass3" instance=ExtResource("9_24wwu")]
+transform = Transform3D(1.1165619, 0, 4.656613e-10, 0, 1, 0, -4.656613e-10, 0, 1.1175644, -0.37636825, 0, -0.081635535)
+
+[node name="unit-tree3" parent="grass3" instance=ExtResource("9_24wwu")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, -4.656613e-10, 0, 1, -0.07430318, 0, -0.36675674)
+
+[node name="unit-tree4" parent="grass3" instance=ExtResource("9_24wwu")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, -4.656613e-10, 0, 1, 0.18144882, 0, -0.3050787)
+
+[node name="unit-tree5" parent="grass3" instance=ExtResource("9_24wwu")]
+transform = Transform3D(1.1284324, 0, 4.656613e-10, 0, 1, 0, 0, 0, 1.2376528, 0.31406206, 0, -0.06506747)
+
+[node name="grass-hill3" parent="." instance=ExtResource("5_7j7qi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9802549, 0, -0.019870132)
+
+[node name="grass-forest3" parent="." instance=ExtResource("4_2jbdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48350382, 0, -0.8676578)
+
+[node name="building-house2" parent="." instance=ExtResource("11_8hon5")]
+transform = Transform3D(0.49419147, 0, -0.8158065, 0, 1, 0, 0.79534346, 0, 0.5069063, 0.98227763, 0, -0.014445305)
+
+[node name="stone-rocks2" parent="." instance=ExtResource("9_2jbdd")]
+transform = Transform3D(0.5159952, 0, -0.85659146, 0, 1, 0, 0.85659146, 0, 0.5159952, 0.49786663, 0, 0.7992064)
+
+[node name="stone2" parent="." instance=ExtResource("9_7j7qi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49319118, 0, 0.8129177)
+
+[node name="path-straight2" parent="stone2" instance=ExtResource("10_3rovh")]
+transform = Transform3D(0.5870821, -0.018576229, 0.755939, -0.0019972504, 0.97166127, 0.020591425, -0.9775613, -0.013141276, 0.45394304, 0.038694292, 0.18185669, -0.051369965)

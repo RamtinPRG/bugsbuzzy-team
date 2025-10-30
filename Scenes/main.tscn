@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgdn1rhmks8wd"]
+[gd_scene load_steps=9 format=3 uid="uid://dgdn1rhmks8wd"]
 
 [ext_resource type="Script" uid="uid://c4j5vkhpoms4q" path="res://player.gd" id="1_h2yge"]
 [ext_resource type="AudioStream" uid="uid://cjbc2nmsg5n2i" path="res://Assets/sounds/toggle.wav" id="2_ueoa1"]
+[ext_resource type="PackedScene" uid="uid://crrqgk6o6v7gl" path="res://wall_unit.tscn" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://c84u5tmmcooak" path="res://Assets/hexagon-kit/GLB format/river-intersectionG.glb" id="3_jjvhh"]
 
 [sub_resource type="Environment" id="Environment_0xm2m"]
 background_mode = 3
@@ -15,6 +17,13 @@ fog_depth_end = 150.0
 volumetric_fog_density = 0.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7dm0k"]
+radius = 0.08105469
+height = 0.34014893
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bo1nx"]
+size = Vector3(20.79126, 1, 19.71344)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8gbba"]
 
 [node name="Main" type="Node3D"]
 
@@ -26,12 +35,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44872, 0.011898)
 script = ExtResource("1_h2yge")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.82992554, 0)
 shape = SubResource("CapsuleShape3D_7dm0k")
 
 [node name="Head" type="SpringArm3D" parent="player"]
 
 [node name="Camera3D" type="Camera3D" parent="player/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.772648, 1.50506)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.9429338, -0.52941084, 1.50506)
+fov = 11.4
+far = 400.0
 
 [node name="Flashlight" type="SpotLight3D" parent="player/Head"]
 transform = Transform3D(1, 0, 0, 0, 0.9906316, 0.13656303, 0, -0.13656303, 0.9906316, 0.0093865525, 0.7490022, 1.30161)
@@ -46,8 +58,25 @@ spot_angle_attenuation = 0.06037119
 
 [node name="FlashlightAudio" type="AudioStreamPlayer3D" parent="player/Head"]
 transform = Transform3D(1, 0, 0, 0, 0.421922, 0.906632, 0, -0.906632, 0.421922, 0.0262375, 0.772655, 1.30161)
+visible = false
 stream = ExtResource("2_ueoa1")
 autoplay = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302759, 1.90735e-06, 0.141972)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2281494, 0, -4.7833557)
+shape = SubResource("BoxShape3D_bo1nx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(15.888189, 0, 0, 0, 1, 0, 0, 0, 9.838183, 0, 0, 0)
+mesh = SubResource("BoxMesh_8gbba")
+
+[node name="WallUnit" parent="." instance=ExtResource("3_8gbba")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3596687, 0.5, 1.3786898)
+
+[node name="river-intersectionG2" parent="." instance=ExtResource("3_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8748417, 0.351403, 1.3761599)
