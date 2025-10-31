@@ -5,14 +5,14 @@
 [ext_resource type="Shader" uid="uid://g8t1cte8wjtp" path="res://stylized-sky.gdshader" id="2_mae5d"]
 [ext_resource type="FontFile" uid="uid://2ns44qu1ek8c" path="res://Cownaffle-6RL5A.ttf" id="3_mae5d"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ouk20"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4hy44"]
 load_path = "res://.godot/imported/Sun.png-a95f9a833c926cd83f1045ceaeba3ab7.s3tc.ctex"
 
 [sub_resource type="Curve" id="Curve_mae5d"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.13551402, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7279608), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_4hy44"]
+[sub_resource type="CurveTexture" id="CurveTexture_ytr4m"]
 curve = SubResource("Curve_mae5d")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ytr4m"]
@@ -23,21 +23,21 @@ seamless = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ecwwl"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kk3ma"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ecwwl"]
 noise = SubResource("FastNoiseLite_ecwwl")
 seamless = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nrnbx"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iqepy"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kk3ma"]
 noise = SubResource("FastNoiseLite_nrnbx")
 seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h1wq0"]
 shader = ExtResource("2_mae5d")
-shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_kk3ma")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_ecwwl")
 shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_l48gv")
-shader_parameter/cloud_curves = SubResource("CurveTexture_4hy44")
+shader_parameter/cloud_curves = SubResource("CurveTexture_ytr4m")
 shader_parameter/clouds_samples = 32
 shader_parameter/shadow_sample = 4
 shader_parameter/clouds_density = 0.40000000596048
@@ -45,25 +45,25 @@ shader_parameter/clouds_scale = 1.0
 shader_parameter/clouds_smoothness = 0.0499999988824
 shader_parameter/clouds_light_color = Color(0.22745098, 0.44705883, 1, 1)
 shader_parameter/clouds_shadow_intensity = 8.0000001192096
-shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_iqepy")
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_kk3ma")
 shader_parameter/high_clouds_density = 0.0
 shader_parameter/top_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
 shader_parameter/bottom_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
 shader_parameter/sun_scatter = Color(0.1254902, 0.08627451, 0.37254903, 1)
 shader_parameter/astro_tint = Color(1, 1, 1, 1)
-shader_parameter/astro_sampler = SubResource("CompressedTexture2D_ouk20")
+shader_parameter/astro_sampler = SubResource("CompressedTexture2D_4hy44")
 shader_parameter/astro_scale = 6.0000000894072
 shader_parameter/astro_intensity = 1.20000000298024
 shader_parameter/stars_intensity = 5.0
 shader_parameter/shooting_stars_intensity = 0.0
 shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_dwrpx"]
+[sub_resource type="Sky" id="Sky_nrnbx"]
 sky_material = SubResource("ShaderMaterial_h1wq0")
 
 [sub_resource type="Environment" id="Environment_g7jxm"]
 background_mode = 2
-sky = SubResource("Sky_dwrpx")
+sky = SubResource("Sky_nrnbx")
 ambient_light_sky_contribution = 0.33
 tonemap_mode = 2
 glow_enabled = true
@@ -145,6 +145,14 @@ text = "The Last Light of Aeloria"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 777.0
+offset_top = 405.0
+offset_right = 1146.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 27
+placeholder_text = "Your Private Key"
 
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,112 @@
+[gd_scene load_steps=16 format=3 uid="uid://duqo033s7y2wf"]
+
+[ext_resource type="Shader" uid="uid://g8t1cte8wjtp" path="res://stylized-sky.gdshader" id="1_a4708"]
+[ext_resource type="FontFile" uid="uid://2ns44qu1ek8c" path="res://Cownaffle-6RL5A.ttf" id="2_bgnqt"]
+[ext_resource type="PackedScene" uid="uid://dxqr7fq0h0h7g" path="res://floor.tscn" id="3_txko1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ouk20"]
+load_path = "res://.godot/imported/Sun.png-a95f9a833c926cd83f1045ceaeba3ab7.s3tc.ctex"
+
+[sub_resource type="Curve" id="Curve_84bc2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.13551402, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7279608), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4hy44"]
+curve = SubResource("Curve_84bc2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_giguj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l48gv"]
+noise = SubResource("FastNoiseLite_giguj")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sbqr3"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kk3ma"]
+noise = SubResource("FastNoiseLite_sbqr3")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jmhl6"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iqepy"]
+noise = SubResource("FastNoiseLite_jmhl6")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6s6lt"]
+shader = ExtResource("1_a4708")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_kk3ma")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_l48gv")
+shader_parameter/cloud_curves = SubResource("CurveTexture_4hy44")
+shader_parameter/clouds_samples = 32
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.40000000596048
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_smoothness = 0.0499999988824
+shader_parameter/clouds_light_color = Color(0.22745098, 0.44705883, 1, 1)
+shader_parameter/clouds_shadow_intensity = 8.0000001192096
+shader_parameter/high_clouds_sampler = SubResource("NoiseTexture2D_iqepy")
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
+shader_parameter/bottom_color = Color(0.02745098, 0.101960786, 0.2509804, 1)
+shader_parameter/sun_scatter = Color(0.1254902, 0.08627451, 0.37254903, 1)
+shader_parameter/astro_tint = Color(1, 1, 1, 1)
+shader_parameter/astro_sampler = SubResource("CompressedTexture2D_ouk20")
+shader_parameter/astro_scale = 6.0000000894072
+shader_parameter/astro_intensity = 1.20000000298024
+shader_parameter/stars_intensity = 5.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_dwrpx"]
+sky_material = SubResource("ShaderMaterial_6s6lt")
+
+[sub_resource type="Environment" id="Environment_ebjum"]
+background_mode = 2
+sky = SubResource("Sky_dwrpx")
+ambient_light_sky_contribution = 0.33
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Defeat" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ebjum")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.05
+shadow_enabled = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.21471578, 0.7916267, -0.5720353, 0, 0.58569574, 0.810531, 0.9766766, -0.1740338, 0.12575811, -2.8934343, 2.701208, 0.5845138)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -133.5
+offset_bottom = 133.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0.36862746, 1)
+theme_override_fonts/font = ExtResource("2_bgnqt")
+theme_override_font_sizes/font_size = 256
+text = "Defeat"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Floor" parent="." instance=ExtResource("3_txko1")]

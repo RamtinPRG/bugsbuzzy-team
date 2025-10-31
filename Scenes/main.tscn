@@ -1,9 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgdn1rhmks8wd"]
+[gd_scene load_steps=17 format=3 uid="uid://dgdn1rhmks8wd"]
 
+[ext_resource type="Script" uid="uid://b4jaguiej1k8d" path="res://Scenes/main.gd" id="1_6bp64"]
 [ext_resource type="Shader" uid="uid://g8t1cte8wjtp" path="res://stylized-sky.gdshader" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://dxqr7fq0h0h7g" path="res://floor.tscn" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://clkt1rv6d77ts" path="res://Sun.png" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://d13mqqp2ndgyy" path="res://player.tscn" id="3_kry3j"]
+[ext_resource type="AudioStream" uid="uid://cyfp0a3mn5qmp" path="res://bgmusic.mp3" id="5_kry3j"]
+[ext_resource type="FontFile" uid="uid://2ns44qu1ek8c" path="res://Cownaffle-6RL5A.ttf" id="6_21xkr"]
 
 [sub_resource type="Curve" id="Curve_8gbba"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.13551402, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7279608), 0.0, 0.0, 0, 0]
@@ -53,10 +56,14 @@ ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kry3j"]
+size = Vector3(0.3, 1, 0.1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_bo1nx"]
 size = Vector3(11.556519, 0.7052002, 13.95845)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_6bp64")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_21xkr")
@@ -73,8 +80,21 @@ sky_mode = 2
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.302759, 1.90735e-06, 0.141972)
 
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(0.846407, 0, -0.53253657, 0, 1, 0, 0.53253657, 0, 0.846407, 3.581204, 0.53935254, -5.974591)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.056067705, 0.2151463, 0.44664145)
+shape = SubResource("BoxShape3D_kry3j")
+
 [node name="Player" parent="." instance=ExtResource("3_kry3j")]
 transform = Transform3D(-0.64545774, 0, -0.763796, 0, 1, 0, 0.763796, 0, -0.64545774, 0.69460666, 0.4096393, -0.39493406)
+
+[node name="Timer" type="Timer" parent="Player"]
+process_callback = 0
+wait_time = 300.0
+one_shot = true
+autostart = true
 
 [node name="Floor" parent="." instance=ExtResource("2_bo1nx")]
 
@@ -83,3 +103,22 @@ transform = Transform3D(-0.64545774, 0, -0.763796, 0, 1, 0, 0.763796, 0, -0.6454
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13897705, -0.1473999, -1.3251114)
 shape = SubResource("BoxShape3D_bo1nx")
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_kry3j")
+autoplay = true
+parameters/looping = true
+
+[node name="Time" type="Label" parent="."]
+offset_left = 78.0
+offset_top = 7.0
+offset_right = 434.0
+offset_bottom = 265.0
+theme_override_fonts/font = ExtResource("6_21xkr")
+theme_override_font_sizes/font_size = 95
+text = "Time Left:"
+vertical_alignment = 1
+
+[connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="Player/Timer" to="Player" method="_on_timer_timeout"]

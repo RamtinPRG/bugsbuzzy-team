@@ -67,3 +67,11 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 
 	move_and_slide()
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	get_tree().change_scene_to_file("res://victory.tscn")
+
+
+func _on_timer_timeout() -> void:
+	get_tree().change_scene_to_file("res://defeat.tscn")
